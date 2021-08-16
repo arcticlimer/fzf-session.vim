@@ -10,9 +10,7 @@
 " Sessions
 " ------------------------------------------------------------------
 
-let s:default_action = {
-  \ 'ctrl-x': 'delete',
-  \ 'ctrl-v': 'overwrite' }
+let s:default_action = { 'ctrl-x': 'delete', 'ctrl-v': 'overwrite' }
 
 function! s:session_handler(lines)
   " a:lines is a list of ['', 'action', <result>]. If there is no result,
@@ -20,11 +18,13 @@ function! s:session_handler(lines)
   if len(a:lines) == 0
     return
   elseif len(a:lines) == 2
-    execute fzf_session#create(a:lines[0])
+    " Don't create a session by default
+    " execute fzf_session#create(a:lines[0])
     return
   endif
 
   normal! m'
+  " TODO: Make session delete work
   let cmd = get(get(g:, 'fzf_action', s:default_action), a:lines[1], '')
 
   if cmd == 'delete'
